@@ -79,3 +79,6 @@ vim.keymap.set("n", "<leader>rI", ":Refactor inline_func")
 
 vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
 vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
+
+-- flote
+vim.keymap.set("n", "<leader>n", ":Flote<CR>", { desc = "Open Flote" })
