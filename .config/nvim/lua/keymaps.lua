@@ -81,4 +81,22 @@ vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
 vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
 
 -- flote
-vim.keymap.set("n", "<leader>n", ":Flote<CR>", { desc = "Open Flote" })
+vim.keymap.set("n", "<leader>n", function()
+	-- check if a Flote buffer is open
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_name(buf):match("flote") then
+			-- Flote buffer found → toggle window
+			for _, win in ipairs(vim.api.nvim_list_wins()) do
+				if vim.api.nvim_win_get_buf(win) == buf then
+					vim.api.nvim_win_close(win, true) -- close Flote window
+					return
+				end
+			end
+			-- if buffer exists but window is not open, open it
+			vim.cmd("Flote")
+			return
+		end
+	end
+	-- no Flote buffer found → open Flote
+	vim.cmd("Flote")
+end, { desc = "Toggle Flote" })
