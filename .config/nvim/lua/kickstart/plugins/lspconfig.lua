@@ -322,6 +322,20 @@ return {
 						"templ",
 					},
 				},
+				eslint = {
+					filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
+					settings = {
+						-- ESLint settings (rarely needed, ESLint usually just reads eslint.config.js)
+						workingDirectory = { mode = "auto" },
+					},
+					on_attach = function(client, bufnr)
+						-- Format (fix) on save
+						vim.api.nvim_create_autocmd("BufWritePre", {
+							buffer = bufnr,
+							command = "EslintFixAll",
+						})
+					end,
+				},
 			}
 
 			-- Ensure the servers and tools above are installed
