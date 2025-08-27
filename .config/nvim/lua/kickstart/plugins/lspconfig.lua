@@ -211,9 +211,6 @@ return {
 			local lspconfig = require("lspconfig")
 			local mason_registry = require("mason-registry")
 
-			-- Get the path to the Vue TypeScript plugin
-			local vue_typescript_plugin_path =
-				"~/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin/"
 			-- Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 			--
@@ -269,6 +266,32 @@ return {
 						},
 					},
 				},
+				twiggy_language_server = {
+					settings = {
+						init_options = {
+							framework = "drupal",
+							includePatterns = {
+								"**/*.twig",
+								"**/templates/**/*.html.twig",
+								"**/themes/**/*.twig",
+								"**/modules/**/*.twig",
+							},
+							twigEnvironment = {
+								namespaces = {
+									["numiko"] = {
+										"themes/custom/numiko/components",
+										"themes/custom/numiko/templates",
+										"themes/custom/numiko/src/components",
+									},
+								},
+							},
+						},
+						root_dir = function(fname)
+							return require("lspconfig").util.root_pattern("composer.json", "docroot")(fname)
+								or require("lspconfig").util.find_git_ancestor(fname)
+						end,
+					},
+				},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -288,8 +311,8 @@ return {
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
 				"tailwindcss",
+				"vue-language-server",
 				"intelephense",
-				"twiggy_language_server",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

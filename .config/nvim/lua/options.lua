@@ -25,6 +25,7 @@ end)
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.expandtab = true
+vim.o.autoindent = true
 vim.o.smartindent = true
 
 -- Make line numbers default
@@ -33,8 +34,8 @@ vim.opt.number = true
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
--- Enable break indent
-vim.opt.breakindent = true
+-- -- Enable break indent
+-- vim.opt.breakindent = true
 
 -- Save undo history
 vim.opt.undofile = true
@@ -94,6 +95,8 @@ vim.cmd([[
   hi VertSplit guibg=NONE ctermbg=NONE
 ]])
 
+-- Numiko Settings
+
 vim.filetype.add({
 	extension = {
 		css = "postcss",
@@ -116,3 +119,11 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*.css",
 	command = "set filetype=css",
 })
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.module", "*.install", "*.test", "*.inc", "*.profile", "*.view" },
+	callback = function()
+		vim.bo.filetype = "php"
+	end,
+})
+
