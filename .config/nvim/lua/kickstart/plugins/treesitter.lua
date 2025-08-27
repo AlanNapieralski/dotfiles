@@ -26,6 +26,7 @@ return {
 				"css",
 				"twig",
 				"php",
+				"jsdoc",
 			},
 			-- Autoinstall languages that are not installed
 			auto_install = true,

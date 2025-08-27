@@ -292,6 +292,36 @@ return {
 						end,
 					},
 				},
+				html = {
+					filetypes = { "html", "htmlangular", "htmldjango", "twig" },
+					init_options = {
+						configurationSection = { "html", "css", "javascript" },
+						embeddedLanguages = {
+							css = true,
+							javascript = true,
+						},
+					},
+				},
+				emmet_language_server = {
+					filetypes = {
+						"html",
+						"css",
+						"scss",
+						"twig",
+						"vue",
+						"typescriptreact",
+						"javascriptreact",
+						"astro",
+						"eruby",
+						"htmlangular",
+						"htmldjango",
+						"less",
+						"pug",
+						"sass",
+						"svelte",
+						"templ",
+					},
+				},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -313,6 +343,8 @@ return {
 				"tailwindcss",
 				"vue-language-server",
 				"intelephense",
+				"html-lsp",
+				"emmet-language-server",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -392,7 +424,18 @@ return {
 			-- nvim 0.11 or above
 			vim.lsp.config("vtsls", vtsls_config)
 			vim.lsp.config("vue_ls", vue_ls_config)
-			vim.lsp.enable({ "vtsls", "vue_ls" })
+			vim.lsp.enable({ "vtsls", "vue_ls", "html" })
+
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "twig",
+				callback = function()
+					vim.lsp.start({
+						name = "emmet_language_server",
+						cmd = { "emmet-language-server", "--stdio" },
+						root_dir = vim.fn.getcwd(),
+					})
+				end,
+			})
 		end,
 	},
 }
