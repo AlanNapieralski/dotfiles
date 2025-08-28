@@ -116,4 +116,4 @@ alias config='/usr/bin/git --git-dir=/Users/nmkadmin/.cfg/ --work-tree=/Users/nm
 PATH="/opt/homebrew/opt/gpatch/libexec/gnubin:$PATH"
 
 
-cd Developer
+cd ~/Developer
