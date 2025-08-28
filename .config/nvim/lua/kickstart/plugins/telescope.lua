@@ -54,8 +54,13 @@ return {
 			-- See `:help telescope` and `:help telescope.setup()`
 			require("telescope").setup({
 				defaults = {
+					wrap_results = true,
 					file_ignore_patterns = {
 						"node_modules",
+					},
+					layout_config = {
+						width = 0.95,
+						preview_width = 0.25,
 					},
 					previewer = {},
 				},
@@ -80,15 +85,23 @@ return {
 			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch Files", silent = true })
 			vim.keymap.set("n", "<leader>sa", function()
 				builtin.find_files({
-					search_dirs = { "~/developer", "~/.config" },
+					search_dirs = { "~/Developer", "~/.config" },
 					hidden = true,
 				})
 			end, { desc = "[s]earch [a]ll", silent = true })
 			vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
 			vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+			vim.keymap.set("n", "<leader>sg", function()
+				require("telescope.builtin").live_grep({
+					layout_config = {
+						preview_width = 0.60,
+					},
+				})
+			end, { desc = "[S]earch by [G]rep" })
 			vim.keymap.set("n", "<leader>sd", function()
-				require("telescope.builtin").diagnostics({ previewer = false })
+				require("telescope.builtin").diagnostics({
+					previewer = false,
+				})
 			end, { desc = "[S]earch [D]iagnostics" })
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })

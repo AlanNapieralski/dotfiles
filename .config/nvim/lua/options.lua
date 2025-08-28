@@ -126,3 +126,22 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 		vim.bo.filetype = "php"
 	end,
 })
+
+vim.diagnostic.config({
+	float = {
+		focusable = false,
+		style = "minimal",
+		border = "rounded",
+		source = "always",
+		header = "",
+		prefix = "",
+		wrap = true, -- 👈 enable wrapping
+	},
+})
+
+vim.diagnostic.config({
+	virtual_text = {
+		spacing = 4,
+		wrap = true, -- Neovim 0.10+ only, wraps long virtual text
+	},
+})
