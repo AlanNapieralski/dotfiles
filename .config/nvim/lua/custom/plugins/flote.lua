@@ -1,6 +1,6 @@
 return {
 	{
-		"JellyApple102/flote.nvim",
+		"AlanNapieralski/flote.nvim",
 		config = function()
 			require("flote").setup({
 				q_to_quit = true,
@@ -20,6 +20,12 @@ return {
 					end,
 				},
 			})
+			templates = {
+				enabled = true,
+				global = "daily", -- Use daily template for global notes
+				project = "project", -- Use project template for project notes
+				default = "project", -- No default template
+			}
 		end,
 		cmd = { "Flote" }, -- lazy load only when Flote command is used
 	},
