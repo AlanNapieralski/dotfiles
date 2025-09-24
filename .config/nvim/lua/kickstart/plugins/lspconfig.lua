@@ -410,6 +410,10 @@ return {
 				capabilities = capabilities,
 			}, servers.emmet_language_server or {}))
 
+			require("lspconfig").html.setup(vim.tbl_deep_extend("force", {
+				capabilities = capabilities,
+			}, servers.html or {}))
+
 			local vue_language_server_path = vim.fn.expand("$MASON/packages")
 				.. "/vue-language-server"
 				.. "/node_modules/@vue/language-server"
