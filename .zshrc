@@ -117,3 +117,4 @@ PATH="/opt/homebrew/opt/gpatch/libexec/gnubin:$PATH"
 
 
 cd ~/Developer
+export PATH="$HOME/.local/bin:$PATH"
