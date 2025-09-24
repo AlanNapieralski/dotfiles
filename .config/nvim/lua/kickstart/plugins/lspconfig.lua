@@ -267,6 +267,7 @@ return {
 					},
 				},
 				twiggy_language_server = {
+					filetypes = { "html", "twig" },
 					settings = {
 						init_options = {
 							framework = "drupal",
@@ -302,7 +303,7 @@ return {
 						},
 					},
 				},
-				emmet_language_server = {
+				emmet_ls = {
 					filetypes = {
 						"html",
 						"css",
@@ -336,6 +337,35 @@ return {
 						})
 					end,
 				},
+				tailwindcss = {
+					filetypes = {
+						"html",
+						"twig", -- Add this
+						"css",
+						"scss",
+						"javascript",
+						"javascriptreact",
+						"typescript",
+						"typescriptreact",
+						"vue",
+						"astro",
+						"svelte",
+						"templ",
+					},
+					settings = {
+						tailwindCSS = {
+							includeLanguages = {
+								twig = "html", -- Tell Tailwind to treat twig as HTML
+							},
+							classAttributes = {
+								"class",
+								"className",
+								"classList",
+								"ngClass",
+							},
+						},
+					},
+				},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -358,7 +388,7 @@ return {
 				"vue-language-server",
 				"intelephense",
 				"html-lsp",
-				"emmet-language-server",
+				"emmet-ls",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -441,11 +471,11 @@ return {
 			vim.lsp.enable({ "vtsls", "vue_ls", "html" })
 
 			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "twig",
+				pattern = "html.twig",
 				callback = function()
 					vim.lsp.start({
-						name = "emmet_language_server",
-						cmd = { "emmet-language-server", "--stdio" },
+						name = "emmet_ls",
+						cmd = { "emmet_ls", "--stdio" },
 						root_dir = vim.fn.getcwd(),
 					})
 				end,
