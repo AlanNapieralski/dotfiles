@@ -303,12 +303,11 @@ return {
 						},
 					},
 				},
-				emmet_ls = {
+				emmet_language_server = {
 					filetypes = {
 						"html",
 						"css",
 						"scss",
-						"twig",
 						"vue",
 						"typescriptreact",
 						"javascriptreact",
@@ -321,6 +320,7 @@ return {
 						"sass",
 						"svelte",
 						"templ",
+						"twig",
 					},
 				},
 				eslint = {
@@ -387,8 +387,7 @@ return {
 				"tailwindcss",
 				"vue-language-server",
 				"intelephense",
-				"html-lsp",
-				"emmet-ls",
+				"html",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -406,6 +405,10 @@ return {
 					end,
 				},
 			})
+			-- Explicit setup due to difference of naming between Lazy and Mason
+			require("lspconfig").emmet_language_server.setup(vim.tbl_deep_extend("force", {
+				capabilities = capabilities,
+			}, servers.emmet_language_server or {}))
 
 			local vue_language_server_path = vim.fn.expand("$MASON/packages")
 				.. "/vue-language-server"
@@ -469,17 +472,6 @@ return {
 			vim.lsp.config("vtsls", vtsls_config)
 			vim.lsp.config("vue_ls", vue_ls_config)
 			vim.lsp.enable({ "vtsls", "vue_ls", "html" })
-
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "html.twig",
-				callback = function()
-					vim.lsp.start({
-						name = "emmet_ls",
-						cmd = { "emmet_ls", "--stdio" },
-						root_dir = vim.fn.getcwd(),
-					})
-				end,
-			})
 		end,
 	},
 }
